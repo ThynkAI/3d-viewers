@@ -2,48 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>3D Model Viewer</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Nose Landing Gear — 3D Viewer</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
   <style>
-    body {
-      margin: 0;
-      background: #f6f6f6;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    model-viewer {
-      width: 100%;
-      height: 100%;
-      max-width: 900px;
-      max-height: 600px;
-      background: white;
-      border-radius: 16px;
+    body{margin:0; background:#f6f6f6;}
+    model-viewer{
+      width:100vw;
+      height:100vh;
+      background:transparent;
     }
   </style>
 </head>
 <body>
- <model-viewer
-  src="assembly_of_nose_landing_gear.glb"
-  alt="3D CAD model"
-  camera-controls
-  auto-rotate
-  rotation-per-second="15deg"
-  exposure="0.85"
-  shadow-intensity="3"
-  shadow-softness="0.2"
-  environment-image="legacy"
-  tone-mapping="aces"
-  camera-orbit="45deg 60deg auto"
-  min-camera-orbit="auto 25deg auto"
-  max-camera-orbit="auto 80deg auto"
-  transparent
-  style="
-    width:100%;
-    height:650px;
-    background: transparent;
-  ">
-</model-viewer>
+  <model-viewer
+    src="./assembly_of_nose_landing_gear.glb"
+    alt="Nose landing gear assembly"
+    camera-controls
+    auto-rotate
+    rotation-per-second="15deg"
+    exposure="0.9"
+    environment-image="neutral"
+    tone-mapping="aces"
+    shadow-intensity="2.5"
+    shadow-softness="0.4"
+    loading="eager"
+    reveal="auto"
+  ></model-viewer>
 </body>
 </html>
