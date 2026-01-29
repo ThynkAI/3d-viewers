@@ -28,12 +28,23 @@
 <body>
   <model-viewer
     src="../models/landing_gear.glb"
-    camera-controls
-    auto-rotate
-    shadow-intensity="1"
-    exposure="1.1"
-    environment-image="../assets/environment.hdr"
-    alt="Main Landing Gear of A350-900">
+    alt="3D CAD model"
+  camera-controls
+  auto-rotate
+  rotation-per-second="15deg"
+  exposure="0.85"
+  shadow-intensity="3"
+  shadow-softness="0.2"
+  environment-image="legacy"
+  tone-mapping="aces"
+  camera-orbit="45deg 60deg auto"
+  min-camera-orbit="auto 25deg auto"
+  max-camera-orbit="auto 80deg auto"
+  transparent
+  style="
+    width:100%;
+    height:650px;
+    background: transparent;
   </model-viewer>
 </body>
 </html>
