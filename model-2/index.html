@@ -2,13 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Aircraft Landing Gear – CAD Study</title>
+  <title>Landing Gear – CAD Viewer</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Google Model Viewer -->
-  <script type="module"
-    src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
-  </script>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
   <style>
     html, body {
@@ -17,6 +14,22 @@
       height: 100%;
       background: transparent;
       overflow: hidden;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    .wrap {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    /* Give a subtle neutral backdrop so "white/metal" parts are visible */
+    .bg {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 20%, rgba(0,0,0,0.06), rgba(0,0,0,0) 45%),
+                  radial-gradient(circle at 70% 80%, rgba(0,0,0,0.05), rgba(0,0,0,0) 45%);
+      pointer-events: none;
     }
 
     model-viewer {
@@ -25,25 +38,86 @@
       background: transparent;
       --poster-color: transparent;
     }
+
+    /* Loading badge */
+    .badge {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: rgba(11,18,32,0.85);
+      color: #fff;
+      font-size: 13px;
+      line-height: 1.35;
+      max-width: calc(100% - 28px);
+    }
+    .badge strong { color: #38bdf8; }
+    .hide { display: none; }
+
+    /* Poster button style (optional) */
+    .poster {
+      background: rgba(11,18,32,0.75);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 14px;
+    }
   </style>
 </head>
 
 <body>
+  <div class="wrap">
+    <div class="bg"></div>
 
-  <model-viewer
-    src="landing_gear.glb"
-    alt="Aircraft Landing Gear – Concept CAD Assembly"
-    camera-controls
-    auto-rotate
-    rotation-per-second="18deg"
-    shadow-intensity="1"
-    exposure="0.85"
-    environment-image="neutral"
-    camera-orbit="45deg 70deg 3.2m"
-    min-camera-orbit="auto auto 2m"
-    max-camera-orbit="auto auto 6m">
+    <model-viewer
+      id="mv"
+      src="./landing_gear.glb"
+      alt="Landing Gear CAD Model"
+      camera-controls
+      shadow-intensity="1"
+      exposure="1.1"
+      environment-image="neutral"
+      loading="eager"
+      reveal="interaction"
+      interaction-prompt="none"
+      auto-rotate
+      rotation-per-second="12deg">
+      
+      <!-- Poster content (shows before reveal) -->
+      <div slot="poster" class="poster">Click to load 3D model</div>
+    </model-viewer>
 
-  </model-viewer>
+    <div id="badge" class="badge">
+      <strong>Status:</strong> Waiting for click… (this prevents blank-screen confusion)
+    </div>
+  </div>
 
+  <script>
+    const mv = document.getElementById("mv");
+    const badge = document.getElementById("badge");
+
+    // When user clicks, the model reveals and begins loading
+    mv.addEventListener("poster-dismissed", () => {
+      badge.innerHTML = "<strong>Status:</strong> Loading model…";
+    });
+
+    mv.addEventListener("load", () => {
+      badge.innerHTML = "<strong>Status:</strong> Model loaded. Fitting camera…";
+      // Force camera framing to model bounds (prevents “camera inside model” issue)
+      mv.cameraOrbit = "auto auto auto";
+      mv.fieldOfView = "auto";
+      setTimeout(() => badge.classList.add("hide"), 1800);
+    });
+
+    mv.addEventListener("error", (e) => {
+      badge.innerHTML =
+        "<strong>Status:</strong> Model failed to render.<br/>" +
+        "Likely causes: huge file, invalid GLB, or unsupported materials.<br/>" +
+        "<strong>Next:</strong> Try a smaller export or GLTF validation.";
+      console.error("Model-viewer error:", e);
+    });
+  </script>
 </body>
 </html>
