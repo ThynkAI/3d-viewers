@@ -2,122 +2,48 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Landing Gear – CAD Viewer</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-
+  <title>3D Model Viewer</title>
   <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
-
   <style>
-    html, body {
+    body {
       margin: 0;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      overflow: hidden;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: #f6f6f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
     }
-
-    .wrap {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-
-    /* Give a subtle neutral backdrop so "white/metal" parts are visible */
-    .bg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 20%, rgba(0,0,0,0.06), rgba(0,0,0,0) 45%),
-                  radial-gradient(circle at 70% 80%, rgba(0,0,0,0.05), rgba(0,0,0,0) 45%);
-      pointer-events: none;
-    }
-
     model-viewer {
       width: 100%;
       height: 100%;
-      background: transparent;
-      --poster-color: transparent;
-    }
-
-    /* Loading badge */
-    .badge {
-      position: absolute;
-      left: 14px;
-      bottom: 14px;
-      padding: 10px 12px;
-      border-radius: 12px;
-      background: rgba(11,18,32,0.85);
-      color: #fff;
-      font-size: 13px;
-      line-height: 1.35;
-      max-width: calc(100% - 28px);
-    }
-    .badge strong { color: #38bdf8; }
-    .hide { display: none; }
-
-    /* Poster button style (optional) */
-    .poster {
-      background: rgba(11,18,32,0.75);
-      color: #fff;
-      padding: 10px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(255,255,255,0.15);
-      font-size: 14px;
+      max-width: 900px;
+      max-height: 600px;
+      background: white;
+      border-radius: 16px;
     }
   </style>
 </head>
-
 <body>
-  <div class="wrap">
-    <div class="bg"></div>
-
-    <model-viewer
-      id="mv"
-      src="./landing_gear.glb"
-      alt="Landing Gear CAD Model"
-      camera-controls
-      shadow-intensity="1"
-      exposure="1.1"
-      environment-image="neutral"
-      loading="eager"
-      reveal="interaction"
-      interaction-prompt="none"
-      auto-rotate
-      rotation-per-second="12deg">
-      
-      <!-- Poster content (shows before reveal) -->
-      <div slot="poster" class="poster">Click to load 3D model</div>
-    </model-viewer>
-
-    <div id="badge" class="badge">
-      <strong>Status:</strong> Waiting for click… (this prevents blank-screen confusion)
-    </div>
-  </div>
-
-  <script>
-    const mv = document.getElementById("mv");
-    const badge = document.getElementById("badge");
-
-    // When user clicks, the model reveals and begins loading
-    mv.addEventListener("poster-dismissed", () => {
-      badge.innerHTML = "<strong>Status:</strong> Loading model…";
-    });
-
-    mv.addEventListener("load", () => {
-      badge.innerHTML = "<strong>Status:</strong> Model loaded. Fitting camera…";
-      // Force camera framing to model bounds (prevents “camera inside model” issue)
-      mv.cameraOrbit = "auto auto auto";
-      mv.fieldOfView = "auto";
-      setTimeout(() => badge.classList.add("hide"), 1800);
-    });
-
-    mv.addEventListener("error", (e) => {
-      badge.innerHTML =
-        "<strong>Status:</strong> Model failed to render.<br/>" +
-        "Likely causes: huge file, invalid GLB, or unsupported materials.<br/>" +
-        "<strong>Next:</strong> Try a smaller export or GLTF validation.";
-      console.error("Model-viewer error:", e);
-    });
-  </script>
+ <model-viewer
+  src="landing_gear.glb"
+  alt="3D CAD model"
+  camera-controls
+  auto-rotate
+  rotation-per-second="15deg"
+  exposure="0.85"
+  shadow-intensity="3"
+  shadow-softness="0.2"
+  environment-image="legacy"
+  tone-mapping="aces"
+  camera-orbit="45deg 60deg auto"
+  min-camera-orbit="auto 25deg auto"
+  max-camera-orbit="auto 80deg auto"
+  transparent
+  style="
+    width:100%;
+    height:650px;
+    background: transparent;
+  ">
+</model-viewer>
 </body>
 </html>
