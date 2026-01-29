@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Main Landing Gear of A350-900</title>
+  <title>Aircraft Landing Gear – CAD Study</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  <!-- Google Model Viewer -->
   <script type="module"
     src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
   </script>
@@ -12,8 +13,10 @@
   <style>
     html, body {
       margin: 0;
+      width: 100%;
       height: 100%;
       background: transparent;
+      overflow: hidden;
     }
 
     model-viewer {
@@ -26,25 +29,21 @@
 </head>
 
 <body>
+
   <model-viewer
     src="landing_gear.glb"
-    alt="3D CAD model"
-  camera-controls
-  auto-rotate
-  rotation-per-second="15deg"
-  exposure="0.85"
-  shadow-intensity="3"
-  shadow-softness="0.2"
-  environment-image="legacy"
-  tone-mapping="aces"
-  camera-orbit="45deg 60deg auto"
-  min-camera-orbit="auto 25deg auto"
-  max-camera-orbit="auto 80deg auto"
-  transparent
-  style="
-    width:100%;
-    height:650px;
-    background: transparent;
+    alt="Aircraft Landing Gear – Concept CAD Assembly"
+    camera-controls
+    auto-rotate
+    rotation-per-second="18deg"
+    shadow-intensity="1"
+    exposure="0.85"
+    environment-image="neutral"
+    camera-orbit="45deg 70deg 3.2m"
+    min-camera-orbit="auto auto 2m"
+    max-camera-orbit="auto auto 6m">
+
   </model-viewer>
+
 </body>
 </html>
