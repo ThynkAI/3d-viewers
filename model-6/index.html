@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>3D Model Viewer</title>
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #f6f6f6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    model-viewer {
+      width: 100%;
+      height: 100%;
+      max-width: 900px;
+      max-height: 600px;
+      background: white;
+      border-radius: 16px;
+    }
+  </style>
+</head>
+<body>
+ <model-viewer
+  src="final_tap.glb"
+  alt="3D CAD model"
+  camera-controls
+  auto-rotate
+  rotation-per-second="15deg"
+  exposure="0.85"
+  shadow-intensity="3"
+  shadow-softness="0.2"
+  environment-image="legacy"
+  tone-mapping="aces"
+  camera-orbit="45deg 60deg auto"
+  min-camera-orbit="auto 25deg auto"
+  max-camera-orbit="auto 80deg auto"
+  transparent
+  style="
+    width:100%;
+    height:650px;
+    background: transparent;
+  ">
+</model-viewer>
+</body>
+</html>
